@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+@theme{
+  /* font-optical-sizing: auto;
+  font-style: normal; */
+  --font-body: 'Inter', sans-serif;
+  --color-fire:#ea2e03
+}
