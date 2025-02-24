@@ -1,8 +1,17 @@
 @import "tailwindcss";
 
-@theme{
-  /* font-optical-sizing: auto;
-  font-style: normal; */
+/* Custom theme variables */
+@theme {
   --font-body: 'Inter', sans-serif;
-  --color-fire:#ea2e03
+  --color-fire: #ea2e03;
+}
+
+/* Hide scrollbar styles */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
 }
