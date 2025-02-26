@@ -41,26 +41,23 @@ const CartContents = () => {
               </p>
               <div className="flex items-center mt-2">
                 <button className="border rounded px-2 py-1 text-xl font-medium cursor-pointer">
-                  {" "}
-                  +{" "}
+                  +
                 </button>
                 <span className="mx-4">{product.qty}</span>
                 <button className="border rounded px-2 py-1 text-xl font-medium cursor-pointer">
-                  {" "}
-                  -{" "}
+                  -
                 </button>
               </div>
             </div>
           </div>
           <div className="">
-        <p className="">${product.price.toLocaleString()}</p>
-        <button className="">
-            <RiDeleteBin3Line className="h-6 w-6 mt-2 text-fire " />
-        </button>
-      </div>
+            <p className="">${product.price.toLocaleString()}</p>
+            <button className="">
+              <RiDeleteBin3Line className="h-6 w-6 mt-2 text-fire " />
+            </button>
+          </div>
         </div>
       ))}
-   
     </div>
   );
 };
