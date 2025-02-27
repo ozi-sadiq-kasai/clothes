@@ -155,7 +155,7 @@ const FilterSidebar = () => {
 
         {/* Size Filter */}
       <div className="mb-6">
-        <label lassName="block text-gray-600 font-medium mb-2">Size</label>
+        <label className="block text-gray-600 font-medium mb-2">Size</label>
         {sizes.map((size) => (
           <div key={size} className="flex items-center mb-1">
             <input
@@ -173,7 +173,7 @@ const FilterSidebar = () => {
 
         {/* Material Filter */}
       <div className="mb-6">
-        <label lassName="block text-gray-600 font-medium mb-2">Material</label>
+        <label className="block text-gray-600 font-medium mb-2">Material</label>
         {materials.map((material) => (
           <div key={material} className="flex items-center mb-1">
             <input
