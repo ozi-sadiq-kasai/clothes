@@ -3,7 +3,7 @@ import { HiArrowPathRoundedSquare } from "react-icons/hi2";
 import { HiOutlineCreditCard } from "react-icons/hi2";
 
 
-const FeaturesSection = () => {
+const FeaturedSection = () => {
   return (
     <section className="py-16 px-4 bg-white">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
@@ -48,4 +48,4 @@ const FeaturesSection = () => {
   );
 };
 
-export default FeaturesSection;
+export default FeaturedSection;
