@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import PayPalButton from "./PayPalButton";
 
 const cart = {
   products: [
@@ -23,7 +24,7 @@ const cart = {
 
 const Checkout = () => {
   const navigate = useNavigate();
-  const [checkoutId,setCheckOutId] = useState(null)
+  const [checkoutId, setCheckOutId] = useState(null);
   const [shippingAddress, setShippingAddress] = useState({
     firstName: "",
     lastName: "",
@@ -33,6 +34,15 @@ const Checkout = () => {
     country: "",
     phone: "",
   });
+
+  const handleCreateCheckout= (e)=>{
+    e.preventDefault()
+    setCheckOutId(123)
+    console.log(checkoutId)
+  }
+  const handlePaymentSuccess = (details) => {
+console.log(details)
+  }
   return (
     <div className="grid grid-cols-1 lg-grid-cols-2 gap-8 mac-w-7xl mx-auto py-10 px-6 tracking-tighter">
       {/* Left Section */}
@@ -159,12 +169,19 @@ const Checkout = () => {
             />
           </div>
           <div className="mt-6">
-            { !checkoutId ? (
-              <button type="submit" className="w-full bg-black text-white py-3 rounded">Continue to Payment</button>
-            ):(<div>
-              <h3 className="text-lg mb-4">Pay with Paypal</h3>
-              {/* Paypal component */}
-            </div>)}
+            {!checkoutId ? (
+              <button
+                type="submit"
+                className="w-full bg-black text-white py-3 rounded"
+              >
+                Continue to Payment
+              </button>
+            ) : (
+              <div>
+                <h3 className="text-lg mb-4">Pay with Paypal</h3>
+               <PayPalButton amount={100} onSuccess={handlePaymentSuccess} onError={(err)=>alert('Payment faiTled. Try Again')}/>
+              </div>
+            )}
           </div>
         </form>
       </div>
