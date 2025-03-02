@@ -35,16 +35,16 @@ const Checkout = () => {
     phone: "",
   });
 
-  const handleCreateCheckout= (e)=>{
-    e.preventDefault()
-    setCheckOutId(123)
-    console.log(checkoutId)
-  }
+  const handleCreateCheckout = (e) => {
+    e.preventDefault();
+    setCheckOutId(123);
+    console.log(checkoutId);
+  };
   const handlePaymentSuccess = (details) => {
-console.log(details)
-  }
+    console.log(details);
+  };
   return (
-    <div className="grid grid-cols-1 lg-grid-cols-2 gap-8 mac-w-7xl mx-auto py-10 px-6 tracking-tighter">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto py-10 px-6 tracking-tighter">
       {/* Left Section */}
       <div className="bg-white rounded-lg p-6">
         <h2 className="text-2xl uppercase mb-6">Checkout</h2>
@@ -179,11 +179,54 @@ console.log(details)
             ) : (
               <div>
                 <h3 className="text-lg mb-4">Pay with Paypal</h3>
-               <PayPalButton amount={100} onSuccess={handlePaymentSuccess} onError={(err)=>alert('Payment faiTled. Try Again')}/>
+                <PayPalButton
+                  amount={100}
+                  onSuccess={handlePaymentSuccess}
+                  onError={(err) => alert("Payment faiTled. Try Again")}
+                />
               </div>
             )}
           </div>
         </form>
+      </div>
+      {/* Right Section */}
+      <div className="bg-gray-50 p-6 rounded-lg">
+        <h3 className="text-lg mb-4">Order Summary</h3>
+        <div className="border-t py-4 mb-4">
+          {cart.products.map((product, index) => (
+            <div
+              className="flex justify-between items-start py-2 border-b"
+              key={index}
+            >
+              <div className="flex items-start">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-20 h-20 object-cover mr-4"
+                />
+                <div>
+                  <h3 className="text-md">{product.name}</h3>
+                  <p className="text-gray-500">Size:{product.size}</p>
+                  <p className="text-gray-500">Color:{product.color}</p>
+                </div>
+              </div>
+              <p className="text-gray-500">
+                Price:{product.price?.toLocaleString()}
+              </p>
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-between items-center text-lg mb-4">
+          <p>Subtotal</p>
+          <p>${cart.totalPrice?.toLocaleString()}</p>
+        </div>
+        <div className="flex justify-between items-center text-lg">
+          <p>Shipping</p>
+          <p>Free</p>
+        </div>
+        <div className="flex justify-between items-center text-lg border-t mt-4"></div>
+      <p>Total</p>
+      <p>${cart.totalPrice?.toLocaleString()}</p>
       </div>
     </div>
   );
