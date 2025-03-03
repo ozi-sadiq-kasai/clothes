@@ -7,7 +7,7 @@ const PayPalButton = ({ amount, checkoutData }) => {
   return (
     <PayPalScriptProvider
       options={{
-        clientId: "AdXQwemRxQ6AAzSrzpxX_sFZAYKvi4oRFukmPM8CVHt1qIPXfZm8CBuBWUIecfgw2VAsj6MERiwZUFny",
+        clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID,
         currency: "USD",
         intent: "capture",
       }}
