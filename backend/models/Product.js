@@ -55,13 +55,10 @@ const productSchema = new mongoose.Schema({
     },
     images: [
         {
-            type: String,
-            required: true,
-            altText: {
-                type: String
-            }
-        }
-    ],
+          url: { type: String, required: true },
+          altText: { type: String },
+        },
+      ],
     isFeatured: {
         type: Boolean,
         default: false
