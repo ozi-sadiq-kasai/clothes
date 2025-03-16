@@ -1,13 +1,13 @@
 const express = require('express')
 const Product = require('../models/Product')
-const { protect } = require("../middleware/authMiddleware")
+const { protect ,admin} = require("../middleware/authMiddleware")
 
 const router = express.Router()
 //@route POST /api/products
 //@desc create a new Product
 //@access Private/Admin
 
-router.post('/', protect, async (req, res) => {
+router.post('/', protect, admin, async (req, res) => {
     try {
         const { name, description, price, discountPrice, countInStock, category, brand, sizes, colors, collections, material, gernder, images, isFeatrued, isPublished, tags, dimensions, weight, sku } = req.body
         const product = new Product({
