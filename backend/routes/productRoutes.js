@@ -159,6 +159,48 @@ router.get("/", async (req, res) => {
 })
 
 
+//@route GET/api/products/:id
+//desc Get a single product  ID
+//@access Public
 
+router.get('/:id', async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id)
+        if (product) {
+            res.json(product)
+
+        } else {
+            res.status(404).json({ message: 'Product Not Found' })
+        }
+    } catch (error) {
+        console.error(error)
+        res.status(500).send('Server Error')
+    }
+})
+
+
+//@route GET/api/products/similar/:id
+//desc Retireve similar products based on the current product's and category
+//@access Public
+
+router.get('/similar/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        const product = await Product.findById(id)
+        if (!product) {
+            return res.status(404).json({ message: 'Product Not Found' })
+        }
+
+        const similarProducts = await Product.find({
+            _id: { $ne: id }, //Exclude the current product ID  
+            gender: product.gender,
+            category: product.category,
+        }).limit(4)
+        res.json(similarProducts)
+    } catch (error) {
+console.error(error)
+res.status(500).send('Server Error')
+    }
+})
 
 module.exports = router
