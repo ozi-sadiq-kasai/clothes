@@ -10,9 +10,9 @@ const router = express.Router()
 
 router.post('/', protect, admin, async (req, res) => {
     try {
-        const { name, description, price, discountPrice, countInStock, category, brand, sizes, colors, collections, material, gernder, images, isFeatrued, isPublished, tags, dimensions, weight, sku } = req.body
+        const { name, description, price, discountPrice, countInStock, category, brand, sizes, colors, collections, material, gender, images, isFeatrued, isPublished, tags, dimensions, weight, sku } = req.body
         const product = new Product({
-            name, description, price, discountPrice, countInStock, category, brand, sizes, colors, collections, material, gernder, images, isFeatrued, isPublished, tags, dimensions, weight, sku, user: req.user._id //id of Admin user creating the product
+            name, description, price, discountPrice, countInStock, category, brand, sizes, colors, collections, material, gender, images, isFeatrued, isPublished, tags, dimensions, weight, sku, user: req.user._id //id of Admin user creating the product
         })
         const createdProduct = await product.save()
         res.status(201).json(createdProduct)
@@ -70,15 +70,15 @@ router.put("/:id", protect, admin, async (req, res) => {
 //@route DELETE /api/products/:id
 //@desc Delete an existing product ID 
 //@access Private/Admin
-router.delete('/:id',protect,admin,async(req,res)=>{
+router.delete('/:id', protect, admin, async (req, res) => {
     try {
         //Find the product by ID
         const product = await Product.findById(req.params.id)
-        if(product){
+        if (product) {
             await product.deleteOne()
-            res.json({message:'Product Deleted'})
-        }else{
-            res.status(404).json({message:'Product Not Found'})
+            res.json({ message: 'Product Deleted' })
+        } else {
+            res.status(404).json({ message: 'Product Not Found' })
         }
     } catch (error) {
         console.error(error)
@@ -88,8 +88,77 @@ router.delete('/:id',protect,admin,async(req,res)=>{
 })
 
 
+//Get All products with optional query filters
+//@route GET /api/products
+//@access Public
+
+router.get("/", async (req, res) => {
+    try {
+        const { collection, size, color, gender, minPrice, maxPrice, sortBy, search, category, material, brand, limit } = req.query
+        let query = {}
+        // Filter logic
+        if (collection && collection.toLowerCase() !== "all") {
+            query.collections = collection
+        }
+        if (category && category.toLowerCase() !== "all") {
+            query.category = category
+        }
+        if (material) {
+            query.material = { $in: material.split(',') }
+        }
+        if (brand) {
+            query.brand = { $in: brand.split(',') }
+        }
+        if (size) {
+            query.sizes = { $in: size.split(',') }
+        }
+        if (color) {
+            query.colors = { $in: [color] }
+        }
+        if (gender) {
+            query.gender = gender
+        }
+        if (minPrice || maxPrice) {
+            query.price = {}
+            if (minPrice) query.price.$gte = Number(minPrice)
+            if (maxPrice) query.price.$lte = Number(maxPrice)
+        }
+        if (search) {
+            query.$or = [
+                { name: { $regex: search, $options: 'i' } },
+                { description: { $regex: search, $options: 'i' } },
+            ]
+        }
+
+        //Sort Logic
+        let sort = {}
+        if (sortBy) {
+            switch (sortBy) {
+                case 'priceAsc': sort = { price: 1 };
+                    break;
+                case "priceDesc": sort = { price: -1 }
+                    break;
+                case "popularity": sort = { rating: -1 }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        // Fetch products and apply sorting and limit
+        let products = await Product.find(query)
+            .sort(sort)
+            .limit(Number(limit) || 0)
+        res.json(products)
+
+
+    } catch (error) {
+        console.error(error)
+        res.status(500).send('Server Error')
+    }
+})
 
 
 
 
-module.exports = router;
+module.exports = router
