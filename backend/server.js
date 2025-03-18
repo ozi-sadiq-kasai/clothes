@@ -5,6 +5,7 @@ const cors = require('cors')
 const connectDB = require('./config/db')
 const userRoutes = require('./routes/userRoutes')
 const productRoutes = require('./routes/productRoutes')
+const cartRoutes = require('./routes/cartRoutes')
 
 const app = express()
 app.use(express.json())
@@ -19,5 +20,6 @@ connectDB()
 //Api Routes
 app.use('/api/users',userRoutes)
 app.use('/api/products',productRoutes)
+app.use('/api/cart',cartRoutes)
 
 app.listen(PORT, () => { console.log(`Server is running on http://localhost:${PORT}`) })
