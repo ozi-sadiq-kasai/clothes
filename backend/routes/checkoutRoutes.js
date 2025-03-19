@@ -5,10 +5,11 @@ const Product = require('../models/Product')
 const Order = require('../models/Order')
 const {protect} = require('../middleware/authMiddleware')
 
+const router = express.Router()
 //@route POST /api/checkout
 //@desc Create a new checkout session
 //@access Private
-route.post('/',protect,async(req,res)=>{
+router.post('/',protect,async(req,res)=>{
     const {checkoutItems,shippingAddress,paymentMethod,totalPrice} = req.body
     if(!checkoutItems || checkoutItems.length === 0){
         return res.status(400).json({message:'No items to checkout'})
