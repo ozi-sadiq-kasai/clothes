@@ -1,6 +1,6 @@
 const express = require('express')
-const User = requier('../models/User')
-const { protect, admin } = requier('../middleware/authMiddleware.js')
+const User = require('../models/User')
+const { protect, admin } = require('../middleware/authMiddleware.js')
 
 const router = express.Router()
 
